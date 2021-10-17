@@ -3,3 +3,19 @@ https://cursos.alura.com.br/forum/topico-codigo-exemplo-aplicacao-106886
 https://s3.amazonaws.com/caelum-online-public/646-docker/03/projetos/volume-exemplo.zip
 https://s3.amazonaws.com/caelum-online-public/646-docker/05/projetos/alura-docker-cap05.zip
 https://s3.amazonaws.com/caelum-online-public/646-docker/06/projetos/alura-docker-cap06.zip
+
+Criando um Dockerfile
+docker build -f Dockerfile -t brunosantanati/node .
+docker run -d -p 8080:3000 brunosantanati/node
+Acessar: http://localhost:8080/
+
+Enviar para o DockerHub
+docker login
+docker push brunosantanati/node
+docker pull brunosantanati/node
+
+Comandos Docker
+docker ps
+docker ps -a
+docker stop 11a67ef65cbb
+docker start 11a67ef65cbb
