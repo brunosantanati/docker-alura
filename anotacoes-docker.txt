@@ -13,6 +13,7 @@ Enviar para o DockerHub
 docker login
 docker push brunosantanati/node
 docker pull brunosantanati/node
+Link do DockerHub: https://hub.docker.com/
 
 Comandos Docker
 docker ps
