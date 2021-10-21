@@ -4,19 +4,100 @@ https://s3.amazonaws.com/caelum-online-public/646-docker/03/projetos/volume-exem
 https://s3.amazonaws.com/caelum-online-public/646-docker/05/projetos/alura-docker-cap05.zip
 https://s3.amazonaws.com/caelum-online-public/646-docker/06/projetos/alura-docker-cap06.zip
 
+Play With Docker (A simple, interactive and fun playground to learn Docker)
+https://labs.play-with-docker.com/
+
+Instalar Docker no Ubuntu
+-------------------------
+1-Antes de mais nada, remova possíveis versões antigas do Docker:
+sudo apt-get remove docker docker-engine docker.io
+
+2-Depois, atualize o banco de dados de pacotes:
+sudo apt-get update
+
+3-Agora, adicione ao sistema a chave GPG oficial do repositório do Docker:
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+4-Adicione o repositório do Docker às fontes do APT:
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+5-Atualize o banco de dados de pacotes, pare ter acesso aos pacotes do Docker a partir do novo repositório adicionado:
+sudo apt-get update
+
+6-Por fim, instale o pacote docker-ce:
+sudo apt-get install docker-ce
+
+7-Caso você queira, você pode verificar se o Docker foi instalado corretamente verificando a sua versão:
+sudo docker version
+
+E para executar o Docker sem precisar de sudo, adicione o seu usuário ao grupo docker:
+sudo usermod -aG docker $(whoami)
+-------------------------
+
 Criando um Dockerfile
+-------------------------
 docker build -f Dockerfile -t brunosantanati/node .
 docker run -d -p 8080:3000 brunosantanati/node
 Acessar: http://localhost:8080/
+-------------------------
 
 Enviar para o DockerHub
+-------------------------
 docker login
 docker push brunosantanati/node
 docker pull brunosantanati/node
 Link do DockerHub: https://hub.docker.com/
+-------------------------
 
-Comandos Docker
+Comandos Docker usados no curso
+-------------------------
+docker version
+docker run hello-world
+docker run ubuntu
+docker run ubuntu echo "Olá Mundo"
+docker run -it ubuntu
 docker ps
 docker ps -a
 docker stop 11a67ef65cbb
 docker start 11a67ef65cbb
+docker start --help
+docker start -a -i 72c
+docker rm 72c
+docker container prune
+docker images
+docker rmi hello-world
+docker run dockersamples/static-site
+docker run -d dockersamples/static-site
+docker run -d -P dockersamples/static-site
+docker stop -t 0 fa35
+docker port eae9
+Se estiver usando o Docker Toolbox pode usar: docker-machine ip
+docker run -d -P --name meu-site dockersamples/static-site
+docker stop meu-site
+docker run -d -p 12345:80 dockersamples/static-site
+docker run -d -P -e AUTHOR="Bruno" dockersamples/static-site
+docker ps -q
+docker stop -t 0 $(docker ps -q)
+-------------------------
+
+Explicações dos comandos fornecidas pelo curso
+-------------------------
+docker version - exibe a versão do docker.
+docker run NOME_DA_IMAGEM - cria um container com a respectiva imagem passada como parâmetro.
+-------------------------
+docker ps - exibe todos os containers em execução no momento.
+docker ps -a - exibe todos os containers, independentemente de estarem em execução ou não.
+docker run -it NOME_DA_IMAGEM - conecta o terminal que estamos utilizando com o do container.
+docker start ID_CONTAINER - inicia o container com id em questão.
+docker stop ID_CONTAINER - interrompe o container com id em questão.
+docker start -a -i ID_CONTAINER - inicia o container com id em questão e integra os terminais, além de permitir interação entre ambos.
+docker rm ID_CONTAINER - remove o container com id em questão.
+docker container prune - remove todos os containers que estão parados.
+docker rmi NOME_DA_IMAGEM - remove a imagem passada como parâmetro.
+docker run -d -P --name NOME dockersamples/static-site - ao executar, dá um nome ao container.
+docker run -d -p 12345:80 dockersamples/static-site - define uma porta específica para ser atribuída à porta 80 do container, neste caso 12345.
+docker run -d -P -e AUTHOR="Fulano" dockersamples/static-site - define uma variável de ambiente AUTHOR com o valor Fulano no container criado.
+-------------------------
