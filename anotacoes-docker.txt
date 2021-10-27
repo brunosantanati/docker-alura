@@ -6,6 +6,7 @@ https://s3.amazonaws.com/caelum-online-public/646-docker/06/projetos/alura-docke
 
 Play With Docker (A simple, interactive and fun playground to learn Docker)
 https://labs.play-with-docker.com/
+Mesmo usuário e senha do DockerHub
 
 Instalar Docker no Ubuntu
 -------------------------
@@ -52,8 +53,9 @@ docker pull brunosantanati/node
 Link do DockerHub: https://hub.docker.com/
 -------------------------
 
-Comandos Docker usados no curso
+Comandos usados no curso (a maioria são comandos do Docker)
 -------------------------
+docker run --help
 docker version
 docker run hello-world
 docker run ubuntu
@@ -95,6 +97,24 @@ docker run -d -p 8080:3000 brunosantanati/node
 docker login
 docker push brunosantanati/node
 docker pull brunosantanati/node
+Dentro do container Ubuntu para pegar o ip: hostname -i
+Instalar o ping dentro do container Ubuntu: apt-get update && apt-get install -y iputils-ping
+Dentro de um container, pingar o outro: ping 172.17.0.2
+docker network create --driver bridge minha-rede
+docker network ls
+docker run -it --name meu-container-de-ubuntu --network minha-rede ubuntu
+docker rm -f meu-ubuntu
+docker inspect meu-container-de-ubuntu
+docker run --name segundo-ubuntu -it --network minha-rede ubuntu
+Posso pingar pelo nome outro container que está na mesma rede(e a rede tem que ter sido criada por mim): ping meu-container-de-ubuntu
+docker pull douglasq/alura-books:cap05
+docker run -d -p 8080:3000 douglasq/alura-books:cap05
+docker rm -f meu-mongo
+docker run -d --name meu-mongo --network minha-rede mongo
+docker inspect meu-mongo
+docker run --network minha-rede -d -p 8080:3000 douglasq/alura-books:cap05
+docker network inspect minha-rede
+docker stop meu-mongo
 -------------------------
 
 Explicações dos comandos fornecidas pelo curso
@@ -123,4 +143,19 @@ docker build -f CAMINHO_DOCKERFILE/Dockerfile -t NOME_USUARIO/NOME_IMAGEM - cons
 docker login - inicia o processo de login no Docker Hub.
 docker push NOME_USUARIO/NOME_IMAGEM - envia a imagem criada para o Docker Hub.
 docker pull NOME_USUARIO/NOME_IMAGEM - baixa a imagem desejada do Docker Hub.
+-------------------------
+No último video usei o comando docker pull douglasq/alura-books:cap05 sem ter explicado antes. Fique tranquilo pois esse comando faz nada mais do que baixar, sem rodar, a imagem desejada do Docker Hub :)
+Por exemplo, para baixar a imagem ubuntu do Docker Hub você pode usar:
+docker pull ubuntu
+
+Para baixar uma imagem de um usuário especifico vimos a sintaxe:
+docker pull NOME_USUARIO/NOME_IMAGEM
+
+Além disso, uma imagem pode ter um tag que serve para pegar uma determinada versão dessa imagem. Alias, você já viu a tag :latest e no video eu usei a tag :cap05, por exemplo:
+docker pull douglasq/alura-books:cap05
+Isso baixará a versão (ou tag) cap05 da imagem alura-books do usuário douglasq.
+-------------------------
+hostname -i - mostra o ip atribuído ao container pelo docker (funciona apenas dentro do container).
+docker network create --driver bridge NOME_DA_REDE - cria uma rede especificando o driver desejado.
+docker run -it --name NOME_CONTAINER --network NOME_DA_REDE NOME_IMAGEM - cria um container especificando seu nome e qual rede deverá ser usada.
 -------------------------
