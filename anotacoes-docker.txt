@@ -89,6 +89,12 @@ touch novo-arquivo.txt
 echo "texto" > novo-arquivo.txt
 docker run -d -p 8080:3000 -v "/root/myfolder:/var/www" -w "/var/www" node npm start
 docker run -d -p 8080:3000 -v "$(pwd):/var/www" -w "/var/www" node npm start
+docker build -f Dockerfile -t brunosantanati/node .
+docker rm -f b7
+docker run -d -p 8080:3000 brunosantanati/node
+docker login
+docker push brunosantanati/node
+docker pull brunosantanati/node
 -------------------------
 
 Explicações dos comandos fornecidas pelo curso
@@ -111,4 +117,10 @@ docker run -d -P -e AUTHOR="Fulano" dockersamples/static-site - define uma vari�
 -------------------------
 docker run -v "[CAMINHO_VOLUME_LOCAL:]CAMINHO_VOLUME_CONTAINER" NOME_DA_IMAGEM - cria um volume no respectivo caminho do container, caso seja especificado um caminho local monta o volume local no volume do container.
 docker inspect ID_CONTAINER - retorna diversas informações sobre o container.
+-------------------------
+docker build -f Dockerfile - cria uma imagem a partir de um Dockerfile.
+docker build -f CAMINHO_DOCKERFILE/Dockerfile -t NOME_USUARIO/NOME_IMAGEM - constrói e nomeia uma imagem não-oficial informando o caminho para o Dockerfile.
+docker login - inicia o processo de login no Docker Hub.
+docker push NOME_USUARIO/NOME_IMAGEM - envia a imagem criada para o Docker Hub.
+docker pull NOME_USUARIO/NOME_IMAGEM - baixa a imagem desejada do Docker Hub.
 -------------------------
